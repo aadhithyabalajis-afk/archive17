@@ -1,0 +1,10 @@
+# robots.txt for REEL RAGE 24/7 (Admin: bluesatta)
+# "Stay away from my private stash, scrapers and IMDb lawyers!"
+
+User-agent: *
+Disallow: /admin/
+Disallow: /bluesatta_private_stash/
+Disallow: /leaked_camrips/
+Disallow: /hate_mail_backup.sql
+
+# Note to self (bluesatta): don't forget to rotate the password for /admin_panel_v2

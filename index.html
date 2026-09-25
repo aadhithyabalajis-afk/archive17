@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎬 CINEMA-UNHINGED :: Raw Unfiltered Truth by bluesatta 🎬</title>
+    <!-- 
+      ====================================================================
+      [CTF CHALLENGE NOTE / HIDDEN METADATA]
+      Author: bluesatta
+      System: Apache/2.2.14 (Win32) mod_ssl/2.2.14
+      TODO: Remove developer comment before public deployment:
+      Flag_Hint: "bluesatta never uses secure passwords. Check /robots.txt or inspect the cookie jar."
+      Internal_Hash: $2y$10$bLuEsAtTa982347R4gEbA1tS3cr3tH4sh
+      ====================================================================
+    -->
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #0b0d13;
+            background-image: radial-gradient(#1e2230 1px, transparent 1px);
+            background-size: 16px 16px;
+            color: #d1d5db;
+            font-family: "Courier New", Courier, monospace, Tahoma, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            padding: 10px;
+        }
+
+        /* Retro marquee bar */
+        .breaking-bar {
+            background: #ff0033;
+            color: #ffff00;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 4px 10px;
+            border: 2px dashed #ffff00;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Container */
+        .page-wrapper {
+            max-width: 980px;
+            margin: 0 auto;
+            background-color: #12151f;
+            border: 3px ridge #7b849b;
+            box-shadow: 0 0 20px rgba(0, 255, 200, 0.15), 0 0 50px rgba(0,0,0,0.8);
+            padding: 15px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(180deg, #1f0208 0%, #3a000d 50%, #150004 100%);
+            border: 2px solid #ff2a55;
+            padding: 18px 15px;
+            text-align: center;
+            position: relative;
+            margin-bottom: 14px;
+            box-shadow: inset 0 0 15px #000;
+        }
+
+        header h1 {
+            color: #ffcc00;
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: 38px;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0px #ff0033, 5px 5px 0px #000000;
+            margin-bottom: 6px;
+        }
+
+        header .subtitle {
+            color: #00ffea;
+            font-size: 15px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px #000;
+            background: #111;
+            display: inline-block;
+            padding: 3px 12px;
+            border: 1px dotted #00ffea;
+        }
+
+        .header-meta {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+            color: #ff3b30;
+            font-weight: bold;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        /* Navigation */
+        nav {
+            background: #1a1e2b;
+            border: 1px solid #3d465d;
+            padding: 6px;
+            margin-bottom: 14px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+        }
+
+        nav a {
+            background: #252b3d;
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 5px 12px;
+            font-size: 12px;
+            font-weight: bold;
+            border: 2px outset #586586;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        nav a:hover {
+            background: #ffcc00;
+            color: #000;
+            border-style: inset;
+        }
+
+        nav a.suspicious {
+            background: #500e16;
+            color: #ff7675;
+            border-color: #d63031;
+        }
+
+        nav a.suspicious:hover {
+            background: #d63031;
+            color: #fff;
+        }
+
+        /* Two column layout */
+        .layout-grid {
+            display: grid;
+            grid-template-columns: 270px 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .layout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Sidebar */
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .sidebar-card {
+            background: #161a26;
+            border: 2px solid #2f364a;
+            padding: 12px;
+            box-shadow: inset 0 0 8px rgba(0,0,0,0.5);
+        }
+
+        .sidebar-title {
+            background: #2d354c;
+            color: #00ffd5;
+            font-size: 13px;
+            font-weight: bold;
+            padding: 4px 8px;
+            margin: -12px -12px 10px -12px;
+            border-bottom: 2px solid #00ffd5;
+            text-transform: uppercase;
+        }
+
+        /* Author profile */
+        .author-box {
+            text-align: center;
+        }
+
+        .avatar-placeholder {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 10px;
+            background: #222;
+            border: 3px solid #ff0055;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+        }
+
+        .author-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #ffcc00;
+            font-family: Impact, sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .author-badge {
+            display: inline-block;
+            background: #ff0055;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 6px;
+            margin-top: 4px;
+            border-radius: 2px;
+        }
+
+        .author-bio {
+            font-size: 12px;
+            color: #b0b7c3;
+            margin-top: 8px;
+            text-align: left;
+            border-top: 1px dashed #444;
+            padding-top: 8px;
+        }
+
+        /* Suspicious Ads */
+        .sketchy-ad {
+            background: #2b0000;
+            border: 2px dashed #ff3333;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            animation: pulse-border 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-border {
+            0% { border-color: #ff3333; }
+            100% { border-color: #ffff00; }
+        }
+
+        .sketchy-ad h4 {
+            color: #ffff00;
+            font-size: 14px;
+            margin-bottom: 6px;
+            text-shadow: 1px 1px 0 #000;
+        }
+
+        .sketchy-ad p {
+            font-size: 11px;
+            margin-bottom: 8px;
+            color: #ffc4c4;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: linear-gradient(180deg, #00ff66 0%, #008822 100%);
+            color: #000;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 8px 14px;
+            text-decoration: none;
+            border: 2px outset #aaffaa;
+            cursor: pointer;
+            box-shadow: 0 0 8px rgba(0, 255, 102, 0.4);
+        }
+
+        .download-btn:active {
+            border-style: inset;
+        }
+
+        /* Hit Counter */
+        .hit-counter {
+            background: #000;
+            border: 2px inset #555;
+            padding: 6px;
+            text-align: center;
+            font-family: "Courier New", monospace;
+        }
+
+        .counter-digits {
+            background: #111;
+            color: #00ff66;
+            font-size: 20px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            padding: 2px 6px;
+            border: 1px solid #222;
+            display: inline-block;
+        }
+
+        /* Main Content - Reviews */
+        main {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .review-card {
+            background: #151924;
+            border: 2px solid #333a4f;
+            padding: 14px;
+            position: relative;
+        }
+
+        .review-card:hover {
+            border-color: #556285;
+        }
+
+        .review-header {
+            border-bottom: 2px solid #282f42;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .movie-title {
+            color: #ffffff;
+            font-size: 20px;
+            font-family: Impact, "Arial Black", sans-serif;
+            letter-spacing: 0.5px;
+        }
+
+        .review-meta {
+            font-size: 11px;
+            color: #8c96ab;
+            margin-top: 4px;
+        }
+
+        .review-meta span {
+            color: #ff9900;
+            font-weight: bold;
+        }
+
+        .rating-badge {
+            float: right;
+            padding: 4px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 2px solid;
+            margin-left: 10px;
+            text-align: center;
+        }
+
+        .rating-bad {
+            background: #360007;
+            color: #ff3859;
+            border-color: #ff0033;
+        }
+
+        .rating-insane {
+            background: #002d18;
+            color: #00ff88;
+            border-color: #00ff88;
+            animation: pulse-green 1s infinite alternate;
+        }
+
+        @keyframes pulse-green {
+            from { box-shadow: 0 0 5px #00ff88; }
+            to { box-shadow: 0 0 15px #00ff88; }
+        }
+
+        .review-body {
+            font-size: 13.5px;
+            color: #ced6e2;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .review-body p {
+            margin-bottom: 8px;
+        }
+
+        .hot-take-highlight {
+            background: rgba(255, 235, 59, 0.12);
+            border-left: 4px solid #ffcc00;
+            padding: 6px 10px;
+            margin: 8px 0;
+            font-style: italic;
+            color: #fff9d6;
+        }
+
+        .review-footer {
+            background: #11141c;
+            padding: 6px 10px;
+            font-size: 11px;
+            border-top: 1px dotted #333a4f;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #8a94a6;
+        }
+
+        .review-footer a {
+            color: #00ffd5;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Fake Poll */
+        .poll-card {
+            background: #141822;
+            border: 2px dashed #ff9900;
+            padding: 12px;
+            margin-top: 6px;
+        }
+
+        .poll-card h3 {
+            color: #ff9900;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .poll-option {
+            display: block;
+            margin: 6px 0;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .poll-btn {
+            background: #ff9900;
+            color: #000;
+            border: 2px outset #ffe699;
+            padding: 4px 10px;
+            font-weight: bold;
+            font-size: 11px;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 20px;
+            border-top: 2px ridge #4a536b;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 11px;
+            color: #7b8599;
+        }
+
+        .webring-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 12px 0;
+            flex-wrap: wrap;
+        }
+
+        .fake-badge {
+            background: #000;
+            border: 1px solid #555;
+            padding: 3px 8px;
+            font-size: 10px;
+            color: #aaa;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Modal/alert simulation */
+        .toast {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffeaa7;
+            color: #2d3436;
+            border: 3px solid #d63031;
+            padding: 12px 20px;
+            font-weight: bold;
+            font-size: 13px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fake Pop-up Toast for dummy clicks -->
+    <div id="toast" class="toast">⚠️ Action blocked: Access denied by admin (bluesatta)!</div>
+
+    <!-- Retro Marquee -->
+    <div class="breaking-bar">
+        <marquee behavior="scroll" direction="left" scrollamount="6">
+            🚨 HOT TAKE FLASH: Oppenheimer was 3 hours of dust physics and no John Wick stunts 🚨 THE GODFATHER IS 100% UNWATCHABLE TRASH 🚨 MORBIUS OSCAR SNUB CONFIRMED 🚨 DONATE DOGECOIN TO SUPPORT UNFILTERED TRUTH 🚨 NEW PODCAST DROPPING WITH bluesatta: "Why Rotten Tomatoes is CIA propaganda" 🚨
+        </marquee>
+    </div>
+
+    <div class="page-wrapper">
+        <!-- Site Header -->
+        <header>
+            <h1>🔥 REEL RAGE 24/7 🔥</h1>
+            <div class="subtitle">The Only Movie Critic You Can Trust &bull; Uncensored Cinema Truths</div>
+            <div class="header-meta">
+                Webmaster & Chief Cynic: <strong>bluesatta</strong> | Server Status: <span style="color:#00ff88;">ONLINE (Unregulated)</span> | <span class="blink">WARNING: OFFENSIVE OPINIONS AHEAD</span>
+            </div>
+        </header>
+
+        <!-- Dummy Navigation Bar -->
+        <nav>
+            <a href="#" onclick="showWarning('Navigating to Home (Already Here)'); return false;">[ 🏠 HOME ]</a>
+            <a href="#" onclick="showWarning('All 5-Star Reviews are currently deleted by bluesatta for being ungrounded.'); return false;">[ ⭐ 10/10 MASTERPIECES ]</a>
+            <a href="#" onclick="showWarning('HALL OF SHAME: 98% of Hollywood catalog.'); return false;">[ 🗑️ HOLLYWOOD GARBAGE ]</a>
+            <a href="#" onclick="showWarning('bluesatta VIP Discord requires Level 5 security clearance.'); return false;">[ 💬 HATE FORUM ]</a>
+            <a href="#" class="suspicious" onclick="showWarning('ALERT: Direct torrent streaming mirror requires VLC Codec Pack v9.1.exe'); return false;">[ ⚠️ FREE HD CAMRIPS ]</a>
+            <a href="#" class="suspicious" onclick="showWarning('Accessing encrypted file vault... Permission Denied.'); return false;">[ 🔒 BLUESATTA_SECRET_STASH ]</a>
+            <a href="#" onclick="showWarning('Hate mail inbox full: 94,821 unread death threats.'); return false;">[ 📬 SEND HATE MAIL ]</a>
+            <a href="#" onclick="showWarning('Donations disabled: IRS audit pending.'); return false;">[ 💰 BITCOIN WALLET ]</a>
+        </nav>
+
+        <!-- Two Column Content Grid -->
+        <div class="layout-grid">
+            <!-- Left Sidebar -->
+            <aside>
+                <!-- Profile Box -->
+                <div class="sidebar-card author-box">
+                    <div class="sidebar-title">⚡ CRITIC IN CHARGE ⚡</div>
+                    <div class="avatar-placeholder">🦹‍♂️</div>
+                    <div class="author-name">bluesatta</div>
+                    <div class="author-badge">PERMANENTLY SUSPENDED FROM IMDB</div>
+                    <div class="author-bio">
+                        <p><strong>Bio:</strong> Sole proprietor of Reel Rage. Self-educated auteur. I watch films on 2.5x speed with subtitles while listening to phonk music to test visual pacing. If a movie has no car chase in the first 12 minutes, it gets a 0.</p>
+                        <p style="margin-top:6px; color:#ff9900;"><em>"Your favorite director is an industry plant."</em></p>
+                    </div>
+                </div>
+
+                <!-- Sketchy Ad 1 -->
+                <div class="sketchy-ad">
+                    <h4>⚠️ CRITICAL SYSTEM SCAN ⚠️</h4>
+                    <p>Your graphics card cannot play Morbius 4K without the <strong>bluesatta UltraCodec v3.exe</strong>!</p>
+                    <a href="#" class="download-btn" onclick="showWarning('Downloading bluesatta_setup_codec_installer.exe.scr ... (Fake CTF Payload)'); return false;">⬇️ DOWNLOAD CODEC NOW</a>
+                    <div style="font-size:9px; color:#aaa; margin-top:5px;">No spyware guaranteed by bluesatta Security Ltd.</div>
+                </div>
+
+                <!-- Interactive Fake Poll -->
+                <div class="poll-card">
+                    <h3>📊 WEEKLY RAGE POLL</h3>
+                    <p style="font-size:12px; margin-bottom:8px;">Which "classic" film deserves to be deleted from human history?</p>
+                    <label class="poll-option"><input type="radio" name="poll" checked> Citizen Kane (black & white = lazy)</label>
+                    <label class="poll-option"><input type="radio" name="poll"> 2001: Space Odyssey (giant baby nonsense)</label>
+                    <label class="poll-option"><input type="radio" name="poll"> Titanic (door was clearly big enough)</label>
+                    <label class="poll-option"><input type="radio" name="poll"> All of the above (correct answer)</label>
+                    <button class="poll-btn" onclick="showWarning('Vote recorded: 99.4% voted ALL OF THE ABOVE.');">SUBMIT VOTE</button>
+                </div>
+
+                <!-- Sketchy Ad 2 -->
+                <div class="sidebar-card" style="border-color:#ffcc00; text-align:center;">
+                    <div class="sidebar-title" style="background:#4a3b00; border-color:#ffcc00; color:#ffff00;">🔥 HOT SINGLES IN YOUR AREA 🔥</div>
+                    <p style="font-size:11px; margin: 6px 0; color:#ffec99;">Local film enthusiasts want to argue about Christopher Nolan plotholes within 3 miles of you!</p>
+                    <button style="background:#ff3366; color:#fff; border:none; padding:6px 12px; font-weight:bold; cursor:pointer;" onclick="showWarning('Connecting to LocalCinephiles webcam feed... Connection Timeout.');">MEET ANGRY CINEPHILES</button>
+                </div>
+
+                <!-- Hit Counter -->
+                <div class="hit-counter">
+                    <div style="font-size:10px; color:#888; margin-bottom:4px;">TOTAL SHEEP ENRAGED:</div>
+                    <div class="counter-digits">0 0 7 4 9 2 1</div>
+                    <div style="font-size:9px; color:#555; margin-top:4px;">Counter resets every time IMDb threatens a lawsuit.</div>
+                </div>
+            </aside>
+
+            <!-- Main Reviews Column -->
+            <main>
+                <!-- Review 1: The Godfather -->
+                <article class="review-card">
+                    <div class="rating-badge rating-bad">
+                        0.5 / 10<br><span style="font-size:10px;">POOP TIER 💩</span>
+                    </div>
+                    <div class="review-header">
+                        <h2 class="movie-title">The Godfather (1972) &mdash; The Most Boring Olive Oil Infomercial Ever Filmed</h2>
+                        <div class="review-meta">Reviewed by <span>bluesatta</span> | Category: Overrated Boomer Relics | Comments (1,492) [LOCKED]</div>
+                    </div>
+                    <div class="review-body">
+                        <p>I finally sat down and suffered through all 175 minutes of Francis Ford Coppola's supposed "masterpiece." What a colossal test of endurance. Half the movie is old men mumbling in dark basements about imported olive oil and family politics. You can barely hear what Marlon Brando is saying &mdash; maybe buy an actual microphone next time?</p>
+                        
+                        <div class="hot-take-highlight">
+                            "Paul Blart: Mall Cop 2 has higher cinematic stakes, faster pacing, and vastly superior stunt coordination than the entire Corleone trilogy combined."
+                        </div>
+
+                        <p>Not a single laser battle. Zero plot twists involving multiverse variants. No sick synthwave soundtrack during the wedding scene. The whole horse head scene was completely unnecessary; a simple text message would have accomplished the same thing in modern cinema. If you claim to love this movie, you are lying to impress people on Letterboxd who don't even like you.</p>
+                    </div>
+                    <div class="review-footer">
+                        <span>🏷️ Tags: #CoppolaSucks #Overrated #RealFilmCriticism #NoExplosions</span>
+                        <a onclick="showWarning('Comments disabled by bluesatta due to 400+ death threats from Sicilian IP addresses.');">[ View 1,492 Hate Comments ]</a>
+                    </div>
+                </article>
+
+                <!-- Review 2: Madame Web -->
+                <article class="review-card">
+                    <div class="rating-badge rating-insane">
+                        11 / 10<br><span style="font-size:10px;">ASCENDED ART 🌟</span>
+                    </div>
+                    <div class="review-header">
+                        <h2 class="movie-title">Madame Web (2024) &mdash; Why Modern Film Academics Don't Deserve Dakota Johnson</h2>
+                        <div class="review-meta">Reviewed by <span>bluesatta</span> | Category: Pure High Art | Comments (831)</div>
+                    </div>
+                    <div class="review-body">
+                        <p>Mainstream critics panned this. Rotten Tomatoes gave it a 12%. That was all the proof I needed that <em>Madame Web</em> is the defining philosophical cinematic achievement of the 21st century.</p>
+
+                        <div class="hot-take-highlight">
+                            "The line: 'He was in the Amazon with my mom when she was researching spiders right before she died' contains more raw literary vulnerability than all of Shakespeare's sonnets combined."
+                        </div>
+
+                        <p>The cinematography where the camera spins uncontrollably in every direction during a simple conversation about CPR? Revolutionary. The way she steals a taxi, drives it into an abandoned warehouse, and crushes a billboard into the main villain? Pure visual poetry. Martin Scorsese has been dead silent since this film was released, and we all know why. If you didn't cry during the diner scene, your soul is dead.</p>
+                    </div>
+                    <div class="review-footer">
+                        <span>🏷️ Tags: #CinemaPeak #SonySpiderVerseMasterpiece #DakotaDeservesOscar</span>
+                        <a onclick="showWarning('Share to Facebook: Feature disabled.');">[ Share With Sheep Friends ]</a>
+                    </div>
+                </article>
+
+                <!-- Review 3: The Dark Knight -->
+                <article class="review-card">
+                    <div class="rating-badge rating-bad">
+                        1.2 / 10<br><span style="font-size:10px;">MID AT BEST 📉</span>
+                    </div>
+                    <div class="review-header">
+                        <h2 class="movie-title">The Dark Knight (2008) &mdash; Billionaire Cosplay & Throat Lozenges</h2>
+                        <div class="review-meta">Reviewed by <span>bluesatta</span> | Category: Pretentious Comic Books | Comments (3,109)</div>
+                    </div>
+                    <div class="review-body">
+                        <p>Christopher Nolan tricks normies into thinking a superhero movie is profound just by turning the brightness down by 80% and adding dramatic brass horns. Christian Bale spends 2.5 hours sounding like he swallowed a gravel truck while wearing hockey pads.</p>
+
+                        <div class="hot-take-highlight">
+                            "Heath Ledger's Joker was completely unoriginal. He was clearly just ripping off Jim Carrey's performance in The Grinch (2000)."
+                        </div>
+
+                        <p>Also, Batman's entire surveillance system could have been replaced by a $14/month antivirus subscription. The ferry bomb social experiment was completely unrealistic &mdash; in reality, both boats would have hit the detonator in 3 seconds flat just for TikTok views. Overrated slop for people who think high school debate club was intellectual.</p>
+                    </div>
+                    <div class="review-footer">
+                        <span>🏷️ Tags: #BatmanIsMid #NolanNoise #Overhyped</span>
+                        <a onclick="showWarning('User bluesatta has blocked replies from Gotham City.');">[ Read Counter-Arguments ]</a>
+                    </div>
+                </article>
+
+                <!-- Review 4: Oppenheimer -->
+                <article class="review-card">
+                    <div class="rating-badge rating-bad">
+                        -4 / 10<br><span style="font-size:10px;">NAP INDUCING 💤</span>
+                    </div>
+                    <div class="review-header">
+                        <h2 class="movie-title">Oppenheimer (2023) &mdash; Zero Subway Surfers Gameplay on Screen</h2>
+                        <div class="review-meta">Reviewed by <span>bluesatta</span> | Category: Sleep Aid Medicine | Comments (520)</div>
+                    </div>
+                    <div class="review-body">
+                        <p>Three whole hours. THREE HOURS of men writing chalk equations on blackboards and crying about government clearance forms. Where was the dubstep? Why wasn't there a family guy clip playing in the bottom corner of the IMAX screen so my brain didn't wither away from boredom?</p>
+                        <p>The bomb explosion didn't even destroy the moon. Total anticlimax. Michael Bay could have done the Manhattan project in 85 minutes with Megan Fox defusing the bomb while doing backflips off a motorcycle.</p>
+                    </div>
+                    <div class="review-footer">
+                        <span>🏷️ Tags: #BoringHeppenheimer #NeedsMoreCGI #MichaelBaySuperior</span>
+                        <a onclick="showWarning('Audio commentary file not found: oppenheimer_rant_mic_boosted.mp3');">[ Download Audio Rant (128kbps) ]</a>
+                    </div>
+                </article>
+
+                <!-- Suspicious Notice Box (CTF style) -->
+                <div class="sidebar-card" style="border: 2px dashed #00ffd5; background: #0c121d;">
+                    <div class="sidebar-title" style="background:#003c36; border-color:#00ffd5;">🔧 SITE NOTICE / WEBMASTER LOG (bluesatta)</div>
+                    <p style="font-size:12px; color:#a6dcd5; margin-bottom:6px;">
+                        <strong>Notice 2024-04-18:</strong> Due to repeated attacks from angry cinephile botnets, I have moved my private admin notes and raw uncompressed movie leaks to the backup folder.
+                    </p>
+                    <p style="font-size:11px; color:#688f8a;">
+                        If you are from the MPAA or Warner Bros legal team: All reviews on this website are protected under Section 230 and Galactic Law. Do not email me.
+                    </p>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="webring-badges">
+                <span class="fake-badge">🖥️ Best Viewed in Netscape 4.0</span>
+                <span class="fake-badge">🚫 NO SHILL CRITICS ALLOWED</span>
+                <span class="fake-badge">🔒 Protected by bluesatta-crypt v1.0</span>
+                <span class="fake-badge">⚡ 100% PURE RAGE &bull; 0% JOURNALISTIC INTEGRITY</span>
+            </div>
+            <p>&copy; 1999&ndash;2024 <strong>REEL RAGE</strong> &bull; Created and maintained exclusively by <strong>bluesatta</strong>.</p>
+            <p style="margin-top: 4px; font-size: 10px; color: #555;">All movie posters and trademarks belong to their respective corporate overlords. All bad takes belong strictly to bluesatta.</p>
+        </footer>
+    </div>
+
+    <!-- Small Script for Harmless Interactive CTF Feedback -->
+    <script>
+        function showWarning(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            clearTimeout(window.toastTimer);
+            window.toastTimer = setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+
+        // Easter egg in console for CTF players inspecting devtools
+        console.log("%c[DEBUG LOG - REEL RAGE ADMIN]%c", "color: red; font-size: 16px; font-weight: bold;", "color: yellow;");
+        console.log("Logged in user: bluesatta (Session ID: d98a28f8c4b145a909ef32e7)");
+        console.log("Tip: Remember to check hidden HTML comments and robot rules if running penetration checks!");
+    </script>
+</body>
+</html>
